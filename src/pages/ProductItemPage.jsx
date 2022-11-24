@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { RadioGroup } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import BackgroundBottom from "../components/BackgroundBottom";
 import Cart from "../components/Cart";
+import { useDispatch } from 'react-redux'
 
 const product = {
   price: "$1200",
@@ -44,7 +44,7 @@ function classNames(...classes) {
 }
 
 export default function ProductItemPage() {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch()
 
   const { id } = useParams();
 
@@ -136,7 +136,7 @@ export default function ProductItemPage() {
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 onClick={(e) => {
                     e.preventDefault();
-                    setOpen(!open);
+                    dispatch({type: "openCart"});
                 }}
               >
                 Add to bag
@@ -178,7 +178,7 @@ export default function ProductItemPage() {
           </div>
         </div>
       </div>
-      <Cart open={open} setOpen={setOpen} />
+      <Cart />
       <BackgroundBottom />
     </div>
   );

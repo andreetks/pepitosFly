@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from 'react-redux'
 
 const navigation = [
   { name: "Vuelos", href: "/products", current: true },
@@ -20,8 +21,8 @@ const navigation = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false);
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -111,7 +112,7 @@ const Header = () => {
                   className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
                   onClick={() => {
-                    setOpen(!open);
+                    dispatch({type: "openCart"});
                   }}
                 />
                 <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
@@ -121,7 +122,7 @@ const Header = () => {
               </a>
             </div>
           </nav>
-          <Cart open={open} setOpen={setOpen} />
+          <Cart />
           <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
             <Dialog.Panel
               focus="true"
