@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog} from "@headlessui/react";
+import { Dialog } from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -7,6 +7,9 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import Cart from "./Cart";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const navigation = [
   { name: "Vuelos", href: "/products", current: true },
@@ -18,6 +21,7 @@ const navigation = [
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <>
@@ -59,13 +63,26 @@ const Header = () => {
               ))}
             </div>
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
-              <a
+              {isAuthenticated ? (
+                <>
+                  <div className="flex h-45px items-center mr-[5px]">{user.nickname}</div>
+
+                  <LogoutButton />
+                </>
+              ) : (
+                <LoginButton />
+              )}
+            </div>
+
+            {/* <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
+              {/* <a
                 href="/login"
                 className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
               >
                 Ingresar
               </a>
-            </div>
+              <LoginButton />
+            </div> */}
             <div className="hidden lg:ml-8 lg:flex">
               <a
                 href="#"
@@ -93,10 +110,12 @@ const Header = () => {
                 <ShoppingBagIcon
                   className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                   aria-hidden="true"
-                  onClick={() => { setOpen(!open)}}
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
                 />
                 <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                  1 
+                  1
                 </span>
                 <span className="sr-only">items in cart, view bag</span>
               </a>
@@ -144,12 +163,13 @@ const Header = () => {
                     ))}
                   </div>
                   <div className="py-6">
-                    <a
+                    {/* <a
                       href="/login"
                       className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
                     >
                       Ingresar
-                    </a>
+                    </a> */}
+                    <LoginButton />
                   </div>
                 </div>
               </div>
