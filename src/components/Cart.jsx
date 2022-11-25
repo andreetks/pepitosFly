@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 
-export default function Cart() {
+export default function Cart({ countryName }) {
   const openCart = useSelector((state) => state.cart.modalOpen);
   const products = useSelector((state) => state.items.itemCarts);
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ export default function Cart() {
                                 <li key={product.id} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
-                                      src={product.imageSrc}
+                                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Airbus_A380_blue_sky.jpg/640px-Airbus_A380_blue_sky.jpg"
                                       alt={product.imageAlt}
                                       className="h-full w-full object-cover object-center"
                                     />
@@ -101,7 +101,12 @@ export default function Cart() {
                                         <button
                                           type="button"
                                           className="font-medium text-indigo-600 hover:text-indigo-500"
-                                          onClick={()=> dispatch( { type: "removeItem", payload:{name: product.name }})}
+                                          onClick={() =>
+                                            dispatch({
+                                              type: "removeItem",
+                                              payload: { name: product.name },
+                                            })
+                                          }
                                         >
                                           Remove
                                         </button>
@@ -129,7 +134,7 @@ export default function Cart() {
                       <div className="mt-6">
                         {isAuthenticated ? (
                           <a
-                            href="/checkout"
+                            href={`/checkout/${countryName}`}
                             className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                           >
                             Checkout

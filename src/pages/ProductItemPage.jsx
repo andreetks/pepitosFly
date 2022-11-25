@@ -180,7 +180,7 @@ export default function ProductItemPage() {
           </div>
         </div>
       </div>
-      <Cart />
+      <Cart countryName={countryName} />
       <BackgroundBottom />
     </div>
   );
