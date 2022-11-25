@@ -1,25 +1,22 @@
 const initialState = {
-    modalOpen: false,
-}
+  modalOpen: false,
+};
 
-export const cartReducer = ( state = initialState, action ) => {
+export const cartReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "openCart":
+      return {
+        ...state,
+        modalOpen: true,
+      };
 
-    switch ( action.type ) {
-        case 'openCart':
-            return {
-                ...state,
-                modalOpen: true
-            }
+    case "closeCart":
+      return {
+        ...state,
+        modalOpen: false,
+      };
 
-        case 'closeCart':
-            return {
-                ...state,
-                modalOpen: false
-            }
-    
-        default:
-            return state;
-    }
-
-
-}
+    default:
+      return state;
+  }
+};
